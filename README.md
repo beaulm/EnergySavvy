@@ -3,7 +3,7 @@
 ### Installation
 *   Clone repository
 *   `npm install`
-*   Run on the command line: `energysavvy [name of input file] expected_savings [name of building]`
+*   Run on the command line: `energysavvy [name of input file] (peak_usage|expected_savings) [name of building]`
 
 ### Improvements
 *   Store data in Redis or persistent database
