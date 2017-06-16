@@ -1,4 +1,4 @@
-#EnergySavvy Homework
+# EnergySavvy Homework
 
 ### Installation
 *   Clone repository
