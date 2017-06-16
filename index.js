@@ -30,6 +30,14 @@ parser.on('readable', function() {
 
   while((record = parser.read()) !== null) {
 
+    //Since we're only really looking at one particular building, if the current building isn't it
+    if(record.building_id !== args[2]) {
+
+      //Just move on to the next record
+      return true;
+
+    }
+
     //Make sure the building_id is legit
     if(typeof String(record.building_id) !== 'string' || record.building_id.length === 0) {
 
