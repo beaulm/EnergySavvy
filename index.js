@@ -20,6 +20,9 @@ let parser = parse({
   skip_empty_lines: true
 });
 
+//Initialize a variable to keep track of the last building added
+let lastBuilding = null;
+
 //For each row in the data set
 parser.on('readable', function() {
 
@@ -54,8 +57,8 @@ parser.on('readable', function() {
 
     }
 
-    //If this is the first record for this building TODO: Possible optimization here
-    if(!buildings.hasOwnProperty(record.building_id)) {
+    //If this is the first record for this building
+    if(lastBuilding !== record.building_id && !buildings.hasOwnProperty(record.building_id)) {
 
       //Add the new building to our list of buildings
       buildings[record.building_id] = new Building();
@@ -72,6 +75,9 @@ parser.on('readable', function() {
       console.log('Failed to add record', result);
 
     }
+
+    //Update our record of the last building added
+    lastBuilding = record.building_id;
 
   }
 
