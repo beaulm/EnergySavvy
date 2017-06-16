@@ -2,7 +2,7 @@
 
 ### Installation
 *   Clone repository
-*   `npm install`
+*   `npm install -g`
 *   Run on the command line: `energysavvy [name of input file] (peak_usage|expected_savings) [name of building]`
 
 ### Improvements
