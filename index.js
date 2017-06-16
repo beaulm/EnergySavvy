@@ -13,9 +13,10 @@ let buildings = {};
 
 //Create the parser
 let parser = parse({
-  columns: true,
   auto_parse: true,
+  columns: true,
   relax: true,
+  relax_column_count: true,
   skip_empty_lines: true
 });
 
@@ -27,9 +28,10 @@ parser.on('readable', function() {
   while((record = parser.read()) !== null) {
 
     //Make sure the building_id is legit
-    if(typeof record.building_id !== 'string' || record.building_id.length === 0) {
+    if(typeof String(record.building_id) !== 'string' || record.building_id.length === 0) {
 
-      console.log(record.building_id+' is not a valid building_id');
+      let lineNumber = parser.count + 3;
+      console.log(record.building_id+' is not a valid building_id on line '+lineNumber);
       continue;
 
     }
@@ -37,7 +39,8 @@ parser.on('readable', function() {
     //Make sure the hour is valid
     if(typeof record.hour !== 'number' || !Number.isInteger(record.hour) || record.hour < 0 || record.hour > 23) {
 
-      console.log(record.hour+' is not a valid hour');
+      let lineNumber = parser.count + 3;
+      console.log(record.hour+' is not a valid hour on line '+lineNumber);
       continue;
 
     }
@@ -45,7 +48,8 @@ parser.on('readable', function() {
     //Make sure the kwh_usage is valid
     if(typeof record.kwh_usage !== 'number' || record.kwh_usage < 0) {
 
-      console.log(record.kwh_usage+' is not a valid kwh_usage');
+      let lineNumber = parser.count + 3;
+      console.log(record.kwh_usage+' is not a valid kwh_usage on line '+lineNumber);
       continue;
 
     }
