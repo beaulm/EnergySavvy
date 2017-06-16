@@ -1,0 +1,26 @@
+{
+  "name": "energysavvy",
+  "version": "1.0.0",
+  "description": "EnergySavvy Homework Assignment",
+  "main": "index.js",
+  "bin": {
+    "energysavvy": "./index.js"
+  },
+  "scripts": {
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "eslint": "./node_modules/.bin/eslint ./*.js",
+    "test": "./node_modules/.bin/_mocha"
+  },
+  "author": "Beau Lynn-Miller",
+  "license": "ISC",
+  "dependencies": {
+    "csv": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "eslint": "^4.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2",
+    "sinon": "^2.3.4"
+  }
+}
