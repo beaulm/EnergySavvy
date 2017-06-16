@@ -56,6 +56,7 @@ describe('Day', () => {
 
 
   it('should be able to calculate all the power used during a time period', () => {
+    
       let newDay = new Day();
       newDay.hours[1] = 4.898962;
       newDay.hours[2] = 4.725122;
