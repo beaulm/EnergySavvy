@@ -24,7 +24,7 @@ let parser = parse({
 let lastBuilding = null;
 
 //For each row in the data set
-parser.on('readable', function() {
+parser.on('readable', () => {
 
   let record = null;
 
@@ -92,14 +92,14 @@ parser.on('readable', function() {
 });
 
 //Catch errors reading the csv
-parser.on('error', function(err) {
+parser.on('error', (err) => {
 
   console.log(err.message);
 
 });
 
 //When all the data has been read
-parser.on('finish', function() {
+parser.on('finish', () => {
 
   let result = null;
 
