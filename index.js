@@ -102,10 +102,9 @@ parser.on('finish', async () => {
   while(command[0] !== 'exit') {
 
     //Prompt the user for another command
-    command = await new Promise((resolve, reject) => {
+    command = await new Promise((resolve) => {
 
-      let stdin = process.stdin,
-          stdout = process.stdout;
+      let {stdin, stdout} = process;
 
       stdin.resume();
       stdout.write('Next command: ');
