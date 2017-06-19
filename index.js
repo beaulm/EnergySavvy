@@ -145,6 +145,14 @@ parser.on('finish', () => {
       }
 
       break;
+
+
+    default:
+
+      console.log('Invalid arguments');
+      console.log('Please run this script as follows: energysavvy [name of input file] (peak_usage|expected_savings) [name of building]');
+      console.log('For example: energysavvy ./example_homes_data.csv peak_usage white_house');
+
   }
 
 });
