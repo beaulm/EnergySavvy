@@ -30,14 +30,6 @@ parser.on('readable', () => {
 
   while((record = parser.read()) !== null) {
 
-    //Since we're only really looking at one particular building, if the current building isn't it
-    if(record.building_id !== args[2]) {
-
-      //Just move on to the next record
-      return true;
-
-    }
-
     //Make sure the building_id is legit
     if(typeof String(record.building_id) !== 'string' || record.building_id.length === 0) {
 
@@ -99,52 +91,92 @@ parser.on('error', (err) => {
 });
 
 //When all the data has been read
-parser.on('finish', () => {
+parser.on('finish', async () => {
 
   let result = null;
 
-  //Run the appropriate command
-  switch(args[1]) {
+  //Initialize an array to store commands coming in from stdin
+  let command = ['', ''];
 
-    case 'peak_usage':
+  //Until the user exits
+  while(command[0] !== 'exit') {
 
-      //If we don't have any records for this building
-      if(!buildings.hasOwnProperty(args[2])) {
+    //Prompt the user for another command
+    command = await new Promise((resolve, reject) => {
 
-        //Throw an error
-        console.log(`"${args[2]}" not in data set!`);
-        return false;
+      let stdin = process.stdin,
+          stdout = process.stdout;
 
-      }
+      stdin.resume();
+      stdout.write('Next command: ');
 
-      //Print the peak usage
-      utilities.peakUsage(buildings[args[2]]);
+      stdin.once('data', (data) => {
 
-      break;
+          resolve(data.toString().trim().split(' '));
 
-    case 'expected_savings':
+      });
 
-      //If we don't have any records for this building
-      if(!buildings.hasOwnProperty(args[2])) {
+    });
 
-        //Throw an error
-        console.log(`"${args[2]}" not in data set!`);
-        return false;
+    //Run the appropriate command
+    switch(command[0]) {
 
-      }
+      case 'peak_usage':
 
-      //Print the expected savings
-      result = utilities.expectedSavings(buildings[args[2]], 12, 18, .3);
+        //If we don't have any records for this building
+        if(!buildings.hasOwnProperty(command[1])) {
 
-      //If we failed to get the expected savings
-      if(result instanceof Error) {
+          //Throw an error
+          console.log(`"${command[1]}" not in data set!`);
+          break;
 
-        //Tell the user about it
-        console.log('Failed to get expected savings', result);
+        }
 
-      }
+        //Print the peak usage
+        utilities.peakUsage(buildings[command[1]]);
 
-      break;
+        break;
+
+
+      case 'expected_savings':
+
+        //If we don't have any records for this building
+        if(!buildings.hasOwnProperty(command[1])) {
+
+          //Throw an error
+          console.log(`"${command[1]}" not in data set!`);
+          break;
+
+        }
+
+        //Print the expected savings
+        result = utilities.expectedSavings(buildings[command[1]], 12, 18, .3);
+
+        //If we failed to get the expected savings
+        if(result instanceof Error) {
+
+          //Tell the user about it
+          console.log('Failed to get expected savings', result);
+
+        }
+
+        break;
+
+
+      case 'exit':
+
+        process.exit();
+
+        break;
+
+
+      default:
+
+        console.log('Command not recognized.');
+        console.log('Available commands: peak_usage, expected_savings, exit');
+
+    }
+
   }
 
 });
